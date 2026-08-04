@@ -326,7 +326,7 @@ function Logo({ light = false }: { light?: boolean }) {
             fontFamily: SERIF,
             fontWeight: 700,
             letterSpacing: 3,
-            fontSize: 18,
+            fontSize: 16,
             color,
           }}
         >
@@ -391,7 +391,7 @@ export default function Home() {
         elevation={0}
         color="transparent"
         sx={{
-          backgroundColor: "rgba(243,238,230,0.9)",
+          backgroundColor: "rgba(243,238,230,0.7)",
           backdropFilter: "blur(8px)",
           borderBottom: "1px solid rgba(0,0,0,0.06)",
         }}
@@ -404,8 +404,8 @@ export default function Home() {
               component="nav"
               aria-label="Primary"
               direction="row"
-              spacing={3}
-              sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+              spacing={5}
+              sx={{ display: "none", alignItems: "center" }}
             >
               {NAV.map((item, i) => (
                 <Link
@@ -430,10 +430,10 @@ export default function Home() {
               ))}
             </Stack>
             <Button
-              variant="contained"
+              variant="text"
               href="#contact"
               sx={{
-                ml: { xs: 0, md: 2 },
+                // ml: { xs: 0, md: 2 },
                 px: 2.5,
                 py: 1,
                 // borderRadius: 0,
@@ -441,7 +441,7 @@ export default function Home() {
                 letterSpacing: 1,
               }}
             >
-              GET IN TOUCH
+              CONTACT
             </Button>
           </Toolbar>
         </Container>
@@ -847,6 +847,7 @@ export default function Home() {
                     mx: "auto",
                     px: 3,
                     py: 1.2,
+                    textAlign: "center",
                     color: "#F3EEE6",
                     borderColor: "rgba(243,238,230,0.6)",
                     letterSpacing: 1,
@@ -878,7 +879,8 @@ export default function Home() {
               sx={{
                 display: "grid",
                 gridTemplateColumns: {
-                  xs: "repeat(2, 1fr)",
+                  xs: "repeat(1, 1fr)",
+                  sm: "repeat(2, 1fr)",
                   md: "repeat(3, 1fr)",
                 },
                 gridAutoRows: { xs: 140, md: 220 },
@@ -886,16 +888,18 @@ export default function Home() {
               }}
             >
               {[
+                { src: Dining, label: "Dining area for four", col: 1, row: 1 },
+
                 {
                   src: BathroomSink,
                   label: "Bathroom sink and vanity",
-                  col: 1,
+                  col: 2,
                   row: 1,
                 },
                 {
                   src: BedroomTwo,
                   label: "Guest Master Bedroom with Bed",
-                  col: 1,
+                  col: 3,
                   row: 1,
                 },
                 {
@@ -904,14 +908,12 @@ export default function Home() {
                   col: 1,
                   row: 1,
                 },
-                { src: Shower, label: "Tiled walk-in shower", col: 1, row: 1 },
                 {
                   src: LivingRoom,
                   label: "Living room with seating area",
                   col: 1,
                   row: 1,
                 },
-                { src: Dining, label: "Dining area for four", col: 1, row: 1 },
               ].map((g, i) => (
                 <Reveal
                   key={g.label}
