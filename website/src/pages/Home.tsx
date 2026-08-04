@@ -11,15 +11,21 @@ import {
   Button,
   Container,
   CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Fade,
   GlobalStyles,
   IconButton,
   Link,
   Stack,
+  TextField,
   ThemeProvider,
   Toolbar,
   Typography,
   createTheme,
-  useMediaQuery,
 } from "@mui/material";
 import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
@@ -37,11 +43,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 
-/* -------------------------------------------------------------------------- */
-/*  Shared placeholder image (swap per-image later)                           */
-/* -------------------------------------------------------------------------- */
-const IMG =
-  "https://cdn.houseplansservices.com/content/kd9d07vf2541auab152shuqveb/w991x660.jpg?v=2";
+const AIRBNB_LINK = "https://www.airbnb.com/rooms/1603180174265456961";
 
 // Images
 import Hero from "../assets/hero.avif";
@@ -56,10 +58,11 @@ import Backyard from "../assets/backyard.avif";
 import BathroomSink from "../assets/bathroomsink.avif";
 import BedroomTwo from "../assets/bedroomtwo.avif";
 import Dining from "../assets/dining.avif";
-import Shower from "../assets/shower.avif";
 
 import AvOne from "../assets/avatar.jpg";
 import AvTwo from "../assets/avatarTwo.jpg";
+import React from "react";
+import type { TransitionProps } from "@mui/material/transitions";
 
 /* -------------------------------------------------------------------------- */
 /*  Theme                                                                     */
@@ -96,10 +99,10 @@ function useReveal<T extends HTMLElement>(rootMargin = "0px 0px -10% 0px") {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
-    }
+    // if (typeof IntersectionObserver === "undefined") {
+    //   setVisible(true);
+    //   return;
+    // }
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -160,14 +163,7 @@ type ImgProps = {
   sx?: object;
 };
 
-function Img({
-  alt,
-  src = IMG,
-  eager = false,
-  ratio,
-  radius = 10,
-  sx,
-}: ImgProps) {
+function Img({ alt, src, eager = false, ratio, radius = 10, sx }: ImgProps) {
   return (
     <Box
       sx={{
@@ -315,9 +311,9 @@ function Logo({ light = false }: { light?: boolean }) {
   return (
     <Stack
       direction="row"
-      alignItems="center"
       spacing={1.2}
       aria-label="Inspiring Joy LLC home"
+      sx={{ alignItems: "center" }}
     >
       <WbSunnyOutlinedIcon sx={{ color: "#C9A24B" }} />
       <Box sx={{ lineHeight: 1 }}>
@@ -348,12 +344,24 @@ function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Fade ref={ref} {...props} />;
+});
+
 /* -------------------------------------------------------------------------- */
 /*  Home                                                                      */
 /* -------------------------------------------------------------------------- */
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [loaded, setLoaded] = useState(false);
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const t = requestAnimationFrame(() => setLoaded(true));
@@ -431,7 +439,7 @@ export default function Home() {
             </Stack>
             <Button
               variant="text"
-              href="#contact"
+              onClick={handleOpen}
               sx={{
                 // ml: { xs: 0, md: 2 },
                 px: 2.5,
@@ -446,6 +454,152 @@ export default function Home() {
           </Toolbar>
         </Container>
       </AppBar>
+
+      <Dialog
+        open={open}
+        slots={{ transition: Transition }}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="contact-dialog-title"
+        aria-describedby="contact-dialog-description"
+        maxWidth="sm"
+        fullWidth
+        slotProps={{
+          paper: {
+            component: "form",
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            onSubmit: (e: React.FormEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              const data = new FormData(e.currentTarget);
+              const values = Object.fromEntries(data.entries());
+              console.log("[v0] contact form submit:", values);
+              handleClose();
+            },
+            sx: {
+              borderRadius: 3,
+              backgroundColor: "background.paper",
+              // maroon accent bar across the top
+              borderTop: "4px solid",
+              borderColor: "primary.main",
+              overflow: "hidden",
+            },
+          },
+        }}
+      >
+        <DialogTitle
+          id="contact-dialog-title"
+          sx={{ pt: 4, px: { xs: 3, md: 4 }, pb: 0 }}
+        >
+          <Typography
+            component="span"
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 1,
+              color: "primary.main",
+              fontSize: 13,
+              fontWeight: 700,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+              "&::before": {
+                content: '""',
+                width: 26,
+                height: 2,
+                backgroundColor: "primary.main",
+                display: "inline-block",
+              },
+            }}
+          >
+            Get in Touch
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: `"Playfair Display", Georgia, serif`,
+              fontWeight: 600,
+              fontSize: { xs: 26, md: 32 },
+              color: "text.primary",
+              mt: 1.5,
+            }}
+          >
+            Let&apos;s Plan Your Stay
+          </Typography>
+        </DialogTitle>
+
+        <DialogContent sx={{ px: { xs: 3, md: 4 }, pt: 2 }}>
+          <DialogContentText
+            id="contact-dialog-description"
+            sx={{ color: "text.secondary", mb: 3 }}
+          >
+            Have a question about Wine &amp; City Retreat or ready to book? Send
+            us a note and we&apos;ll get back to you shortly.
+          </DialogContentText>
+
+          <Stack spacing={2.5}>
+            <TextField
+              name="name"
+              label="Full Name"
+              placeholder="Jane Doe"
+              required
+              fullWidth
+              autoFocus
+            />
+
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2.5}>
+              <TextField
+                name="email"
+                type="email"
+                label="Email"
+                placeholder="jane@email.com"
+                required
+                fullWidth
+              />
+              <TextField
+                name="phone"
+                type="tel"
+                label="Phone Number"
+                placeholder="(555) 000-0000"
+                fullWidth
+                inputMode="tel"
+              />
+            </Stack>
+
+            <TextField
+              name="message"
+              label="Message"
+              placeholder="Tell us about your trip, dates, or any questions..."
+              required
+              fullWidth
+              multiline
+              minRows={4}
+            />
+          </Stack>
+        </DialogContent>
+
+        <DialogActions sx={{ px: { xs: 3, md: 4 }, pb: 3.5, pt: 1, gap: 1 }}>
+          <Button
+            onClick={handleClose}
+            color="inherit"
+            sx={{
+              borderRadius: 0,
+              px: 3,
+              py: 1.1,
+              color: "text.secondary",
+              letterSpacing: 1,
+            }}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: 0, px: 4, py: 1.1, letterSpacing: 1 }}
+          >
+            SEND
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Box component="main">
         {/* -------------------------------- Hero -------------------------------- */}
@@ -523,8 +677,7 @@ export default function Home() {
               <Button
                 variant="contained"
                 color="primary"
-                // size="large"
-                href="#contact"
+                href={AIRBNB_LINK}
                 sx={{
                   ...heroAnim(420),
                   borderRadius: 0.4,
@@ -551,7 +704,7 @@ export default function Home() {
               }}
             >
               <Reveal>
-                <Eyebrow>Welcome to River &amp; Pine</Eyebrow>
+                <Eyebrow>Welcome to Wine &amp; City Retreat</Eyebrow>
                 <Typography
                   variant="h2"
                   sx={{ fontSize: { xs: 34, md: 44 }, mt: 2, mb: 3 }}
@@ -562,15 +715,15 @@ export default function Home() {
                   color="text.secondary"
                   sx={{ mb: 4, maxWidth: 460 }}
                 >
-                  River &amp; Pine is a thoughtfully designed space just steps
-                  from the Willamette River, Riverfront Park, and downtown
+                  Wine &amp; City Retreat is a thoughtfully designed space just
+                  steps from the Willamette River, Riverfront Park, and downtown
                   Salem. Whether you&apos;re here for work, a getaway, or to
                   explore the valley, you&apos;ll feel right at home.
                 </Typography>
                 <Button
                   variant="outlined"
                   color="inherit"
-                  href="#gallery"
+                  href={AIRBNB_LINK}
                   sx={{
                     borderRadius: 0,
                     px: 3,
@@ -614,9 +767,9 @@ export default function Home() {
                         key={b.big}
                         direction="row"
                         spacing={1}
-                        alignItems="center"
                         sx={{
                           p: { xs: 1.2, md: 1.6 },
+                          alignItems: "center",
                           borderLeft:
                             i === 0
                               ? "none"
@@ -667,10 +820,10 @@ export default function Home() {
               {AMENITIES.map((a, i) => (
                 <Stack
                   key={a.title}
-                  alignItems="center"
                   spacing={0.5}
                   sx={{
                     px: 1,
+                    alignItems: "center",
                     py: { xs: 1.5, md: 0 },
                     textAlign: "center",
                     borderLeft: {
@@ -738,13 +891,15 @@ export default function Home() {
                   Thoughtful Details. Modern Comfort.
                 </Typography>
                 <Typography color="text.secondary" sx={{ mb: 4 }}>
-                  Every detail at River &amp; Pine has been carefully curated to
-                  make your stay comfortable, relaxing, and memorable.
+                  Every detail at Wine &amp; City Retreat has been carefully
+                  curated to make your stay comfortable, relaxing, and
+                  memorable.
                 </Typography>
                 <Button
                   variant="outlined"
                   color="inherit"
-                  href="#gallery"
+                  target="_blank"
+                  href="https://www.airbnb.com/rooms/1603180174265456961/amenities"
                   sx={{
                     borderRadius: 0,
                     px: 3,
@@ -784,8 +939,7 @@ export default function Home() {
                 <Stack
                   direction="row"
                   spacing={1}
-                  alignItems="center"
-                  sx={{ mb: 3 }}
+                  sx={{ mb: 3, alignItems: "center" }}
                 >
                   <Typography
                     sx={{ fontWeight: 700, letterSpacing: 1, fontSize: 14 }}
@@ -818,7 +972,11 @@ export default function Home() {
                       >
                         {r.text}
                       </Typography>
-                      <Stack direction="row" spacing={1} alignItems="center">
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        style={{ alignItems: "center" }}
+                      >
                         <Avatar
                           sx={{ width: 34, height: 34 }}
                           alt={`Guest ${r.name}`}
@@ -840,7 +998,8 @@ export default function Home() {
 
                 <Button
                   variant="outlined"
-                  href="#"
+                  href="https://www.airbnb.com/rooms/1603180174265456961/reviews?&review_page_entrypoint=show_all"
+                  target="_blank"
                   sx={{
                     mt: 4,
                     borderRadius: 0,
@@ -883,7 +1042,7 @@ export default function Home() {
                   sm: "repeat(2, 1fr)",
                   md: "repeat(3, 1fr)",
                 },
-                gridAutoRows: { xs: 140, md: 220 },
+                gridAutoRows: { xs: 200, md: 250 },
                 gap: 2,
               }}
             >
@@ -940,7 +1099,10 @@ export default function Home() {
               <Button
                 variant="outlined"
                 color="inherit"
-                href="#"
+                href={
+                  "https://www.airbnb.com/rooms/1603180174265456961?modal=PHOTO_TOUR_SCROLLABLE"
+                }
+                target="_blank"
                 sx={{
                   borderRadius: 0,
                   px: 4,
@@ -1027,12 +1189,17 @@ export default function Home() {
                   {col.links.map((l) => (
                     <Link
                       key={l}
-                      href="#"
+                      //   href="#"
+                      onClick={() => {
+                        if (l === "Contact") {
+                          handleOpen();
+                        }
+                      }}
                       underline="none"
                       color="text.secondary"
                       sx={{
                         fontSize: 14,
-                        "&:hover": { color: "primary.main" },
+                        "&:hover": { color: "primary.main", cursor: "pointer" },
                       }}
                     >
                       {l}
@@ -1045,16 +1212,30 @@ export default function Home() {
 
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            justifyContent="space-between"
-            spacing={1}
-            sx={{ mt: 6, pt: 3, borderTop: "1px solid rgba(0,0,0,0.08)" }}
+            spacing={2}
+            sx={{
+              mt: 6,
+              pt: 3,
+              borderTop: "1px solid rgba(0,0,0,0.08)",
+              display: "flex",
+              flex: 1,
+              justifyContent: "space-between",
+            }}
           >
             <Typography color="text.secondary" sx={{ fontSize: 13 }}>
               © {new Date().getFullYear()} Inspiring Joy LLC. All rights
               reserved.
             </Typography>
+
             <Typography color="text.secondary" sx={{ fontSize: 13 }}>
-              Website by Boese Byte Software
+              Website by{" "}
+              <a
+                style={{ textDecoration: "none", color: "#33c599" }}
+                href="https://www.boesebyte.software/"
+                target="_blank"
+              >
+                Boese Byte Software
+              </a>
             </Typography>
           </Stack>
         </Container>
