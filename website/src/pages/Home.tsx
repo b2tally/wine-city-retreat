@@ -39,7 +39,6 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import PinterestIcon from "@mui/icons-material/Pinterest";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 
@@ -307,7 +306,7 @@ const FOOTER = [
   },
   {
     heading: "Resources",
-    links: ["Product Favorites", "Privacy Policy"],
+    links: ["Privacy Policy"],
   },
 ];
 
@@ -1169,7 +1168,7 @@ export default function Home() {
                         key={benefit}
                         direction="row"
                         spacing={1.5}
-                        alignItems="flex-start"
+                        style={{ alignItems: "flex-start" }}
                       >
                         <Box
                           sx={{
@@ -1285,7 +1284,7 @@ export default function Home() {
                         key={benefit}
                         direction="row"
                         spacing={1.5}
-                        alignItems="flex-start"
+                        style={{ alignItems: "flex-start" }}
                       >
                         <Box
                           sx={{
@@ -1442,7 +1441,7 @@ export default function Home() {
                         key={benefit}
                         direction="row"
                         spacing={1.5}
-                        alignItems="flex-start"
+                        style={{ alignItems: "flex-start" }}
                       >
                         <Box
                           sx={{
