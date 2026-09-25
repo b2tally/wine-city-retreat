@@ -45,6 +45,10 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 
 const AIRBNB_LINK = "https://www.airbnb.com/rooms/1603180174265456961";
 
+const VRBO_LINK = "https://www.vrbo.com/5071000";
+
+const DIRECT_BOOKING_LINK = "/book";
+
 // Images
 import Hero from "../assets/hero.avif";
 import Salem from "../assets/salem.jpg";
@@ -61,8 +65,17 @@ import Dining from "../assets/dining.avif";
 
 import AvOne from "../assets/avatar.jpg";
 import AvTwo from "../assets/avatarTwo.jpg";
+
+import Airbnb from "../assets/airbnb.svg";
+import Vrbo from "../assets/vrbo.svg";
 import React from "react";
 import type { TransitionProps } from "@mui/material/transitions";
+import {
+  FavoriteBorder,
+  GppGoodOutlined,
+  HolidayVillage,
+  People,
+} from "@mui/icons-material";
 
 /* -------------------------------------------------------------------------- */
 /*  Theme                                                                     */
@@ -287,19 +300,14 @@ const REVIEWS = [
 ];
 
 const FOOTER = [
-  { heading: "Company", links: ["About Us", "Our Mission", "Blog", "Contact"] },
+  { heading: "Company", links: ["About Us", "Contact"] },
   {
     heading: "Explore",
-    links: ["Our Rentals", "Affiliate Shop", "Airbnb Revamp Services", "FAQs"],
+    links: ["Affiliate Shop", "Airbnb Revamp Services", "FAQs"],
   },
   {
     heading: "Resources",
-    links: [
-      "Host Tips",
-      "Travel Guides",
-      "Product Favorites",
-      "Privacy Policy",
-    ],
+    links: ["Product Favorites", "Privacy Policy"],
   },
 ];
 
@@ -445,11 +453,25 @@ export default function Home() {
                 px: 2.5,
                 py: 1,
                 // borderRadius: 0,
-                borderRadius: 0.4,
+                borderRadius: 0.7,
                 letterSpacing: 1,
               }}
             >
               CONTACT
+            </Button>
+            <Button
+              variant="contained"
+              href="#book-options"
+              sx={{
+                // ml: { xs: 0, md: 2 },
+                px: 2.5,
+                py: 1,
+                // borderRadius: 0,
+                borderRadius: 0.7,
+                letterSpacing: 1,
+              }}
+            >
+              BOOK
             </Button>
           </Toolbar>
         </Container>
@@ -581,7 +603,7 @@ export default function Home() {
             onClick={handleClose}
             color="inherit"
             sx={{
-              borderRadius: 0,
+              borderRadius: 0.7,
               px: 3,
               py: 1.1,
               color: "text.secondary",
@@ -594,7 +616,7 @@ export default function Home() {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ borderRadius: 0, px: 4, py: 1.1, letterSpacing: 1 }}
+            sx={{ borderRadius: 0.7, px: 4, py: 1.1, letterSpacing: 1 }}
           >
             SEND
           </Button>
@@ -674,20 +696,6 @@ export default function Home() {
                 <br />
                 Be Our Guest.
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                href={AIRBNB_LINK}
-                sx={{
-                  ...heroAnim(420),
-                  borderRadius: 0.4,
-                  px: 4,
-                  py: 1.4,
-                  letterSpacing: 1,
-                }}
-              >
-                BOOK NOW
-              </Button>
             </Box>
           </Container>
         </Box>
@@ -725,7 +733,7 @@ export default function Home() {
                   color="inherit"
                   href={AIRBNB_LINK}
                   sx={{
-                    borderRadius: 0,
+                    borderRadius: 0.7,
                     px: 3,
                     py: 1.3,
                     borderColor: "rgba(0,0,0,0.35)",
@@ -901,7 +909,7 @@ export default function Home() {
                   target="_blank"
                   href="https://www.airbnb.com/rooms/1603180174265456961/amenities"
                   sx={{
-                    borderRadius: 0,
+                    borderRadius: 0.7,
                     px: 3,
                     py: 1.3,
                     borderColor: "rgba(0,0,0,0.35)",
@@ -1002,7 +1010,7 @@ export default function Home() {
                   target="_blank"
                   sx={{
                     mt: 4,
-                    borderRadius: 0,
+                    borderRadius: 0.7,
                     mx: "auto",
                     px: 3,
                     py: 1.2,
@@ -1030,6 +1038,507 @@ export default function Home() {
             </Box>
           </Reveal>
         </Container>
+
+        {/* --------------------------- Booking Options --------------------------- */}
+        <Box
+          component="section"
+          id="booking"
+          sx={{
+            py: { xs: 8, md: 12 },
+            backgroundColor: "#F3EEE6",
+          }}
+        >
+          <Container maxWidth="lg">
+            <Reveal>
+              <Box
+                sx={{
+                  textAlign: "center",
+                  maxWidth: 760,
+                  mx: "auto",
+                  mb: { xs: 5, md: 7 },
+                }}
+              >
+                <Eyebrow>Choose Your Booking Experience</Eyebrow>
+
+                <Typography
+                  variant="h2"
+                  id="book-options"
+                  sx={{
+                    fontSize: { xs: 34, sm: 44, md: 56 },
+                    mt: 2,
+                    mb: 3,
+                    color: "#142F2A",
+                  }}
+                >
+                  Same Great Stay.
+                  <br />
+                  Your Choice.
+                </Typography>
+
+                <Typography
+                  color="text.secondary"
+                  sx={{
+                    fontSize: { xs: 15, md: 17 },
+                    maxWidth: 620,
+                    mx: "auto",
+                    lineHeight: 1.8,
+                  }}
+                >
+                  Book your stay through the platform you know and love, or
+                  reserve directly with us and enjoy exclusive savings.
+                </Typography>
+              </Box>
+            </Reveal>
+
+            {/* Booking Cards */}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  md: "repeat(3, minmax(0, 1fr))",
+                },
+                gap: { xs: 3, md: 2.5 },
+                alignItems: "stretch",
+              }}
+            >
+              {/* Airbnb */}
+              <Reveal delay={0} sx={{ height: "100%" }}>
+                <Box
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid rgba(43,39,36,0.10)",
+                    borderRadius: 3,
+                    p: { xs: 3, sm: 4 },
+                    boxShadow: "0 8px 30px rgba(43,39,36,0.04)",
+                    transition: "transform .3s ease, box-shadow .3s ease",
+                    "&:hover": {
+                      transform: { md: "translateY(-5px)" },
+                      boxShadow: "0 16px 40px rgba(43,39,36,0.10)",
+                    },
+                  }}
+                >
+                  <Stack
+                    spacing={1}
+                    sx={{
+                      alignItems: "center",
+                      textAlign: "center",
+                      mb: 3,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        height: 76,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 1,
+                      }}
+                    >
+                      <img src={Airbnb} style={{ width: 135 }} />
+                    </Box>
+
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontSize: { xs: 23, md: 25 },
+                        color: "#142F2A",
+                      }}
+                    >
+                      Book with Airbnb
+                    </Typography>
+
+                    <Typography
+                      color="text.secondary"
+                      sx={{ fontSize: 14, lineHeight: 1.7 }}
+                    >
+                      Enjoy the convenience of booking through Airbnb.
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={2} sx={{ mb: 4 }}>
+                    {[
+                      "Secure booking & payment",
+                      "Guest support through Airbnb",
+                      "Review and reservation history",
+                    ].map((benefit) => (
+                      <Stack
+                        key={benefit}
+                        direction="row"
+                        spacing={1.5}
+                        alignItems="flex-start"
+                      >
+                        <Box
+                          sx={{
+                            color: "#2E6B5A",
+                            fontSize: 17,
+                            lineHeight: 1.5,
+                            flexShrink: 0,
+                          }}
+                        >
+                          ✓
+                        </Box>
+
+                        <Typography
+                          color="text.secondary"
+                          sx={{ fontSize: 13.5, lineHeight: 1.5 }}
+                        >
+                          {benefit}
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Stack>
+
+                  <Box sx={{ flexGrow: 1 }} />
+
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    href={AIRBNB_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      mt: 2,
+                      py: 1.5,
+                      borderRadius: 0.7,
+                      backgroundColor: "#FF385C",
+                      color: "#FFFFFF",
+                      fontSize: 13,
+                      letterSpacing: 0.3,
+                      "&:hover": {
+                        backgroundColor: "#E31C5F",
+                      },
+                    }}
+                  >
+                    Book on Airbnb →
+                  </Button>
+                </Box>
+              </Reveal>
+
+              {/* VRBO */}
+              <Reveal delay={100} sx={{ height: "100%" }}>
+                <Box
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid rgba(43,39,36,0.10)",
+                    borderRadius: 3,
+                    p: { xs: 3, sm: 4 },
+                    boxShadow: "0 8px 30px rgba(43,39,36,0.04)",
+                    transition: "transform .3s ease, box-shadow .3s ease",
+                    "&:hover": {
+                      transform: { md: "translateY(-5px)" },
+                      boxShadow: "0 16px 40px rgba(43,39,36,0.10)",
+                    },
+                  }}
+                >
+                  <Stack
+                    spacing={1}
+                    sx={{
+                      alignItems: "center",
+                      textAlign: "center",
+                      mb: 3,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        height: 76,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 1,
+                      }}
+                    >
+                      <img src={Vrbo} style={{ width: 125 }} />
+                    </Box>
+
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontSize: { xs: 23, md: 25 },
+                        color: "#142F2A",
+                      }}
+                    >
+                      Book with VRBO
+                    </Typography>
+
+                    <Typography
+                      color="text.secondary"
+                      sx={{ fontSize: 14, lineHeight: 1.7 }}
+                    >
+                      Find your stay through the Vrbo booking platform.
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={2} sx={{ mb: 4 }}>
+                    {[
+                      "Secure booking & payment",
+                      "Guest support through Vrbo",
+                      "Reservation management",
+                    ].map((benefit) => (
+                      <Stack
+                        key={benefit}
+                        direction="row"
+                        spacing={1.5}
+                        alignItems="flex-start"
+                      >
+                        <Box
+                          sx={{
+                            color: "#2E6B5A",
+                            fontSize: 17,
+                            lineHeight: 1.5,
+                            flexShrink: 0,
+                          }}
+                        >
+                          ✓
+                        </Box>
+
+                        <Typography
+                          color="text.secondary"
+                          sx={{ fontSize: 13.5, lineHeight: 1.5 }}
+                        >
+                          {benefit}
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Stack>
+
+                  <Box sx={{ flexGrow: 1 }} />
+
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    href={VRBO_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      mt: 2,
+                      py: 1.5,
+                      borderRadius: 0.7,
+                      backgroundColor: "#1B4B8F",
+                      color: "#FFFFFF",
+                      fontSize: 13,
+                      letterSpacing: 0.3,
+                      "&:hover": {
+                        backgroundColor: "#153A70",
+                      },
+                    }}
+                  >
+                    Book on VRBO →
+                  </Button>
+                </Box>
+              </Reveal>
+
+              {/* Direct Booking - Featured */}
+              <Reveal delay={200} sx={{ height: "100%" }}>
+                <Box
+                  sx={{
+                    position: "relative",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "#143D34",
+                    color: "#F3EEE6",
+                    borderRadius: 3,
+                    p: { xs: 3, sm: 4 },
+                    overflow: "hidden",
+                    boxShadow: "0 12px 40px rgba(20,61,52,0.16)",
+                    transition: "transform .3s ease, box-shadow .3s ease",
+                    "&:hover": {
+                      transform: { md: "translateY(-5px)" },
+                      boxShadow: "0 20px 48px rgba(20,61,52,0.25)",
+                    },
+                  }}
+                >
+                  {/* Decorative pattern */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      width: 260,
+                      height: 260,
+                      right: -120,
+                      bottom: -130,
+                      borderRadius: "50%",
+                      border: "1px solid rgba(169,234,195,0.14)",
+                      pointerEvents: "none",
+                    }}
+                  />
+
+                  {/* Savings badge */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      backgroundColor: "#A9EAC3",
+                      color: "#143D34",
+                      px: 2,
+                      py: 1.2,
+                      borderBottomLeftRadius: 12,
+                      fontSize: 12,
+                      fontWeight: 800,
+                      letterSpacing: 0.5,
+                    }}
+                  >
+                    SAVE 10%
+                  </Box>
+
+                  <Stack
+                    spacing={1}
+                    sx={{
+                      alignItems: "center",
+                      textAlign: "center",
+                      mb: 3,
+                      position: "relative",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        height: 76,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 1,
+                      }}
+                    >
+                      <HolidayVillage style={{ fontSize: 55 }} />
+                    </Box>
+
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontSize: { xs: 23, md: 25 },
+                        color: "#F3EEE6",
+                      }}
+                    >
+                      Book Direct
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        lineHeight: 1.7,
+                        color: "rgba(243,238,230,0.82)",
+                      }}
+                    >
+                      The best value, right here.
+                      <br />
+                      Save 10% when you book directly with us.
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={2} sx={{ mb: 4 }}>
+                    {[
+                      "Save 10% on your stay",
+                      "Direct communication with your host",
+                      "A more personal booking experience",
+                    ].map((benefit) => (
+                      <Stack
+                        key={benefit}
+                        direction="row"
+                        spacing={1.5}
+                        alignItems="flex-start"
+                      >
+                        <Box
+                          sx={{
+                            color: "#A9EAC3",
+                            fontSize: 17,
+                            lineHeight: 1.5,
+                            flexShrink: 0,
+                          }}
+                        >
+                          ✓
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            fontSize: 13.5,
+                            lineHeight: 1.5,
+                            color: "rgba(243,238,230,0.9)",
+                          }}
+                        >
+                          {benefit}
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Stack>
+
+                  <Box sx={{ flexGrow: 1 }} />
+
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    href={DIRECT_BOOKING_LINK}
+                    sx={{
+                      mt: 2,
+                      py: 1.5,
+                      borderRadius: 0.7,
+                      backgroundColor: "#A9EAC3",
+                      color: "#143D34",
+                      fontSize: 13,
+                      fontWeight: 800,
+                      letterSpacing: 0.2,
+                      "&:hover": {
+                        backgroundColor: "#C5F3D7",
+                      },
+                    }}
+                  >
+                    Book Direct & Save 10% →
+                  </Button>
+                </Box>
+              </Reveal>
+            </Box>
+
+            {/* Trust message */}
+            <Reveal delay={250}>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 2, sm: 4 }}
+                sx={{
+                  mt: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Stack direction="row" style={{ alignItems: "center", gap: 6 }}>
+                  <GppGoodOutlined />
+                  <Typography
+                    color="text.secondary"
+                    sx={{ fontSize: 12.5, letterSpacing: 0.2 }}
+                  >
+                    Secure Booking
+                  </Typography>
+                </Stack>
+
+                <Stack direction="row" style={{ alignItems: "center", gap: 6 }}>
+                  <People />
+                  <Typography
+                    color="text.secondary"
+                    sx={{ fontSize: 12.5, letterSpacing: 0.2 }}
+                  >
+                    Your Choice, Your Stay
+                  </Typography>
+                </Stack>
+
+                <Stack direction="row" style={{ alignItems: "center", gap: 6 }}>
+                  <FavoriteBorder />
+                  <Typography
+                    color="text.secondary"
+                    sx={{ fontSize: 12.5, letterSpacing: 0.2 }}
+                  >
+                    A Stay to Remember
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Reveal>
+          </Container>
+        </Box>
 
         {/* ------------------------------ Gallery ------------------------------- */}
         <Box component="section" id="gallery" sx={{ pb: { xs: 8, md: 12 } }}>
@@ -1104,7 +1613,7 @@ export default function Home() {
                 }
                 target="_blank"
                 sx={{
-                  borderRadius: 0,
+                  borderRadius: 0.7,
                   px: 4,
                   py: 1.4,
                   borderColor: "rgba(0,0,0,0.35)",
@@ -1147,10 +1656,6 @@ export default function Home() {
                   {
                     icon: <FacebookIcon fontSize="small" />,
                     label: "Facebook",
-                  },
-                  {
-                    icon: <PinterestIcon fontSize="small" />,
-                    label: "Pinterest",
                   },
                   {
                     icon: <EmailOutlinedIcon fontSize="small" />,
@@ -1230,7 +1735,7 @@ export default function Home() {
             <Typography color="text.secondary" sx={{ fontSize: 13 }}>
               Website by{" "}
               <a
-                style={{ textDecoration: "none", color: "#33c599" }}
+                style={{ textDecoration: "none", color: "#000000" }}
                 href="https://www.boesebyte.software/"
                 target="_blank"
               >
